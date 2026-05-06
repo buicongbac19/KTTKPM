@@ -155,6 +155,23 @@ SET
 WHERE
     hinh_anh = '/images/tra-dao.jpg';
 
+/* Đổi username cũ để dễ nhớ */
+UPDATE nguoi_dung
+SET
+    username = 'thungan'
+WHERE
+    username = 'cashier_default'
+    AND (
+        SELECT COUNT(*)
+        FROM (
+            SELECT 1
+            FROM nguoi_dung
+            WHERE
+                username = 'thungan'
+        ) t
+    ) = 0;
+
+/* Tài khoản thu ngân */
 INSERT INTO
     nguoi_dung (
         username,
@@ -164,13 +181,13 @@ INSERT INTO
         so_dien_thoai,
         email
     )
-SELECT 'cashier_default', NULL, 'Nguyễn Văn A', NULL, '0816119402', 'cashier@local'
+SELECT 'thungan', '123456', 'Nguyễn Văn A', NULL, '0816119402', 'thungan@local'
 WHERE
     NOT EXISTS (
         SELECT 1
         FROM nguoi_dung
         WHERE
-            username = 'cashier_default'
+            username = 'thungan'
     );
 
 INSERT INTO
@@ -178,7 +195,7 @@ INSERT INTO
 SELECT nd.id, 'THU_NGAN'
 FROM nguoi_dung nd
 WHERE
-    nd.username = 'cashier_default'
+    nd.username = 'thungan'
     AND NOT EXISTS (
         SELECT 1
         FROM nhan_vien nv
@@ -186,7 +203,40 @@ WHERE
             nv.nguoi_dung_id = nd.id
     );
 
-UPDATE nguoi_dung
-SET ho_va_ten = 'Nguyễn Văn A'
+/* Tài khoản nhân viên phục vụ */
+INSERT INTO
+    nguoi_dung (
+        username,
+        password,
+        ho_va_ten,
+        ngay_sinh,
+        so_dien_thoai,
+        email
+    )
+SELECT 'phucvu', '123456', 'Nguyễn Văn B', NULL, '0816119403', 'phucvu@local'
 WHERE
-    username = 'cashier_default';
+    NOT EXISTS (
+        SELECT 1
+        FROM nguoi_dung
+        WHERE
+            username = 'phucvu'
+    );
+
+INSERT INTO
+    nhan_vien (nguoi_dung_id, vi_tri)
+SELECT nd.id, 'PHUC_VU'
+FROM nguoi_dung nd
+WHERE
+    nd.username = 'phucvu'
+    AND NOT EXISTS (
+        SELECT 1
+        FROM nhan_vien nv
+        WHERE
+            nv.nguoi_dung_id = nd.id
+    );
+
+/* Chuẩn hoá tất cả tài khoản nhân viên về mật khẩu dễ nhớ */
+UPDATE nguoi_dung nd
+    JOIN nhan_vien nv ON nv.nguoi_dung_id = nd.id
+SET
+    nd.password = '123456';

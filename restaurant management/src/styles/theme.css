@@ -1,0 +1,1923 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
+:root {
+  --bg-main: #dbdbdb;
+  --panel-bg: #e4e4e4;
+  --text-main: #111111;
+  --text-muted: #5b5b5b;
+  --border-default: #5e5e5e;
+  --border-strong: #333333;
+  --btn-primary: #ecd788;
+  --btn-success: #a8c89c;
+  --btn-danger: #d7b6b6;
+  --btn-secondary: #d7d7d7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% 0, #ededed 0%, var(--bg-main) 45%, #d2d2d2 100%);
+  color: var(--text-main);
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.page {
+  width: min(1160px, 96vw);
+  margin: 20px auto 40px;
+}
+
+.panel {
+  border: 2px solid var(--border-strong);
+  background: var(--panel-bg);
+  padding: 22px;
+}
+
+.section-header {
+  border-bottom: 2px solid var(--border-default);
+  padding-bottom: 14px;
+  margin-bottom: 20px;
+}
+
+.title {
+  margin: 0 0 10px;
+  font-size: clamp(30px, 3vw, 42px);
+  font-weight: 700;
+}
+
+.title-inline {
+  margin: 0;
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 700;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 18px;
+  color: var(--text-muted);
+}
+
+.section-subtitle {
+  margin: 0 0 12px;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.label-large {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.top-nav {
+  width: min(1160px, 96vw);
+  margin: 12px auto 0;
+  display: flex;
+  gap: 10px;
+}
+
+.top-nav-link {
+  border: 1px solid var(--border-default);
+  background: #d8d8d8;
+  padding: 10px 14px;
+  font-weight: 600;
+}
+
+.top-nav-link.router-link-active {
+  border-color: var(--border-strong);
+  background: #f0f0f0;
+}
+
+/* Trang chủ — theo layout wireframe (tiêu đề + gạch ngang + hai nút xếp dọc) */
+.home-panel {
+  border: 2px solid #111111;
+  background: #ffffff;
+  padding: 20px 24px 28px;
+}
+
+.home-header {
+  margin: 0;
+}
+
+.home-title {
+  margin: 0;
+  font-size: clamp(22px, 2.5vw, 32px);
+  font-weight: 700;
+  color: #111111;
+}
+
+.home-divider {
+  margin: 10px 0 0;
+  border: none;
+  border-top: 1px solid #111111;
+}
+
+.home-actions {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.home-action {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(100%, 640px);
+  min-height: 88px;
+  padding: 16px 20px;
+  border: 1px solid #111111;
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 700;
+  color: #111111;
+  text-align: center;
+  transition: filter 150ms ease;
+}
+
+.home-action:hover {
+  filter: brightness(0.97);
+}
+
+.home-action--order {
+  background: #fde9a6;
+}
+
+.home-action--pay {
+  background: #d5e8d4;
+}
+
+/* Chọn bàn — wireframe (Roboto, viền 1px, chevron tùy chỉnh, nút #FCE6A9) */
+.choose-table-page.page {
+  font-family: "Roboto", "Segoe UI", Helvetica, Arial, sans-serif;
+  width: min(1160px, 96vw);
+  margin: 20px auto 40px;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+.choose-table-panel {
+  margin: 0;
+  padding: 22px 24px 24px;
+  border: 2px solid #111111;
+  background: #ffffff;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.choose-table-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+}
+
+.choose-table-back {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #111111;
+  font-size: 26px;
+  line-height: 1;
+  font-weight: 400;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.choose-table-back:hover {
+  opacity: 0.75;
+}
+
+.choose-table-title {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #111111;
+}
+
+.choose-table-divider {
+  margin: 12px 0 0;
+  border: none;
+  border-top: 1px solid #111111;
+  width: 100%;
+}
+
+.choose-table-field-label {
+  display: block;
+  margin: 20px 0 10px;
+  font-size: 17px;
+  font-weight: 700;
+  color: #111111;
+}
+
+.choose-table-select-wrap {
+  width: 100%;
+}
+
+.choose-table-select {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 12px 42px 12px 12px;
+  border: 1px solid #111111;
+  border-radius: 0;
+  color: #111111;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 14 10'%3E%3Cpath fill='%23111111' d='M0 0h14L7 10z'/%3E%3C/svg%3E")
+      no-repeat right 14px center / 12px 9px,
+    #ffffff;
+}
+
+.choose-table-select:focus,
+.choose-table-select:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.choose-table-select:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 14 10'%3E%3Cpath fill='%23111111' d='M0 0h14L7 10z'/%3E%3C/svg%3E")
+      no-repeat right 14px center / 12px 9px,
+    #f5f5f5;
+}
+
+.choose-table-footer {
+  margin-top: 56px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.choose-table-continue {
+  margin: 0;
+  padding: 14px 36px;
+  min-height: 48px;
+  border: 1px solid #111111;
+  background: #fce6a9;
+  color: #111111;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.choose-table-continue:hover:not(:disabled) {
+  filter: brightness(0.97);
+}
+
+.choose-table-continue:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.choose-table-panel .status-banner {
+  margin-top: 16px;
+}
+
+/* Danh sách món gọi — wireframe (bảng 4 cột, #F2F2F2 header, nút #FDF2B3 / #D9EAD3) */
+.menu-order-page.page {
+  font-family: "Roboto", "Segoe UI", Helvetica, Arial, sans-serif;
+  width: min(1160px, 96vw);
+  margin: 20px auto 40px;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+.menu-order-panel {
+  margin: 0;
+  padding: 22px 24px 24px;
+  border: 2px solid #000000;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.menu-order-panel .status-banner {
+  margin-top: 14px;
+}
+
+.menu-order-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-order-back {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #000000;
+  font-size: 26px;
+  line-height: 1;
+  font-weight: 400;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.menu-order-back:hover {
+  opacity: 0.75;
+}
+
+.menu-order-title {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #000000;
+}
+
+.menu-order-divider {
+  margin: 12px 0 0;
+  border: none;
+  border-top: 1px solid #bdbdbd;
+  width: 100%;
+}
+
+.menu-order-table-line {
+  margin: 18px 0 14px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 17px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.menu-order-table-num {
+  display: inline-block;
+  min-width: 100px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid #000000;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.menu-order-search {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.menu-order-search-input {
+  flex: 1;
+  min-width: min(200px, 100%);
+  padding: 11px 12px;
+  border: 1px solid #000000;
+  border-radius: 0;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 400;
+  background: #ffffff;
+  color: #000000;
+}
+
+.menu-order-search-input::placeholder {
+  color: #b0b0b0;
+}
+
+.menu-order-search-input:focus,
+.menu-order-search-input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.menu-order-btn-search {
+  padding: 10px 22px;
+  border: 1px solid #000000;
+  border-radius: 0;
+  background: #fdf2b3;
+  color: #000000;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.menu-order-btn-search:hover:not(:disabled) {
+  filter: brightness(0.98);
+}
+
+.menu-order-btn-search:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.menu-order-section-title {
+  margin: 22px 0 10px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #000000;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.menu-order-table-shell {
+  margin-top: 10px;
+}
+
+.menu-order-panel .menu-order-data-table {
+  background: #ffffff;
+}
+
+.menu-order-panel .menu-order-data-table thead th {
+  background: #f2f2f2;
+  border: 1px solid #000000;
+  padding: 10px 8px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.menu-order-panel .menu-order-data-table tbody td {
+  border: 1px solid #000000;
+  padding: 10px 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #000000;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.menu-order-panel .menu-order-results-table .col-dish-name {
+  width: 40%;
+}
+
+.menu-order-panel .menu-order-results-table .col-price {
+  width: 18%;
+}
+
+.menu-order-panel .menu-order-results-table .col-quantity {
+  width: 26%;
+}
+
+.menu-order-panel .menu-order-results-table .col-action {
+  width: 16%;
+}
+
+.menu-order-panel .menu-order-data-table .empty-row {
+  font-size: 15px;
+  font-weight: 500;
+  color: #5c5c5c;
+}
+
+.menu-order-panel .menu-order-data-table .dish-name {
+  font-weight: 700;
+}
+
+.menu-order-panel .menu-order-data-table .price-text {
+  color: #000000;
+  font-weight: 700;
+}
+
+.menu-order-qty-cell,
+.menu-order-action-cell {
+  text-align: center;
+}
+
+.menu-order-panel .quantity-stepper {
+  justify-content: center;
+}
+
+.menu-order-panel .quantity-stepper .step-btn,
+.menu-order-panel .quantity-stepper .quantity-input {
+  border: 1px solid #000000;
+  background: #ffffff;
+  color: #000000;
+}
+
+.menu-order-panel .quantity-stepper .step-btn {
+  width: 30px;
+  height: 30px;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.menu-order-panel .quantity-stepper .quantity-input {
+  width: 42px;
+  height: 30px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.menu-order-btn-add {
+  padding: 7px 18px;
+  border: 1px solid #000000;
+  border-radius: 0;
+  background: #d9ead3;
+  color: #000000;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.menu-order-btn-add:hover {
+  filter: brightness(0.98);
+}
+
+.menu-order-list-heading {
+  margin: 28px 0 14px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #000000;
+}
+
+.menu-order-footer {
+  margin-top: 28px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.menu-order-btn-confirm {
+  padding: 14px 32px;
+  min-height: 52px;
+  min-width: 240px;
+  border: 1px solid #000000;
+  border-radius: 0;
+  background: #d9ead3;
+  color: #000000;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.menu-order-btn-confirm:hover:not(:disabled) {
+  filter: brightness(0.98);
+}
+
+.menu-order-btn-confirm:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Nhập các bàn thanh toán — wireframe (khung 2px, ô nhập viền đầy đủ, nút #F9E29B) */
+.payment-tables-page.page {
+  font-family: "Roboto", "Segoe UI", Helvetica, Arial, sans-serif;
+  width: min(1160px, 96vw);
+  margin: 20px auto 40px;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+.payment-tables-panel {
+  margin: 0;
+  padding: 22px 24px 24px;
+  border-style: solid;
+  border-color: #000000;
+  border-width: 2px;
+  background: #ffffff;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.payment-tables-panel .status-banner {
+  margin-top: 14px;
+}
+
+.payment-tables-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+}
+
+.payment-tables-back {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #000000;
+  font-size: 26px;
+  line-height: 1;
+  font-weight: 400;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.payment-tables-back:hover {
+  opacity: 0.75;
+}
+
+.payment-tables-title {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #000000;
+}
+
+.payment-tables-divider {
+  margin: 12px 0 0;
+  border: none;
+  border-top: 1px solid #bdbdbd;
+  width: 100%;
+}
+
+.payment-tables-label {
+  display: block;
+  margin: 20px 0 10px;
+  font-size: 17px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.payment-tables-input {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 12px 12px;
+  border: 1px solid #000000;
+  border-radius: 0;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 400;
+  color: #000000;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.payment-tables-input::placeholder {
+  color: #b0b0b0;
+}
+
+.payment-tables-input:focus,
+.payment-tables-input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.payment-tables-footer {
+  margin-top: 48px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.payment-tables-continue {
+  margin: 0;
+  padding: 12px 32px;
+  min-height: 48px;
+  border: 1px solid #000000;
+  border-radius: 0;
+  background: #f9e29b;
+  color: #000000;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.payment-tables-continue:hover:not(:disabled) {
+  filter: brightness(0.98);
+}
+
+.payment-tables-continue:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Nhập thông tin khách hàng — wireframe (khung 2px, ô nhập viền đầy đủ, nút #F9E2AF) */
+.customer-info-page.page {
+  font-family: "Roboto", "Segoe UI", Helvetica, Arial, sans-serif;
+  width: min(1160px, 96vw);
+  margin: 20px auto 40px;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+.customer-info-panel {
+  margin: 0;
+  padding: 22px 24px 24px;
+  border-style: solid;
+  border-color: #000000;
+  border-width: 2px;
+  background: #ffffff;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.customer-info-panel .status-banner {
+  margin-top: 14px;
+}
+
+.customer-info-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+}
+
+.customer-info-back {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #000000;
+  font-size: 26px;
+  line-height: 1;
+  font-weight: 400;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.customer-info-back:hover {
+  opacity: 0.75;
+}
+
+.customer-info-title {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #000000;
+}
+
+.customer-info-divider {
+  margin: 12px 0 0;
+  border: none;
+  border-top: 1px solid #bdbdbd;
+  width: 100%;
+}
+
+.customer-info-field {
+  margin-top: 20px;
+}
+
+.customer-info-field--gap {
+  margin-top: 32px;
+}
+
+.customer-info-label {
+  display: block;
+  margin: 0 0 8px;
+  font-size: 17px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.customer-info-input {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 12px 12px;
+  border-style: solid;
+  border-color: #000000;
+  border-width: 1px;
+  border-radius: 0;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 400;
+  color: #000000;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.customer-info-input::placeholder {
+  color: #9e9e9e;
+}
+
+.customer-info-input:focus,
+.customer-info-input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.customer-info-footer {
+  margin-top: 40px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.customer-info-continue {
+  margin: 0;
+  padding: 12px 32px;
+  min-height: 48px;
+  border-style: solid;
+  border-color: #000000;
+  border-width: 1px;
+  border-radius: 0;
+  background: #f9e2af;
+  color: #000000;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.customer-info-continue:hover:not(:disabled) {
+  filter: brightness(0.98);
+}
+
+.customer-info-continue:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Chi tiết thanh toán — wireframe (bảng 5 cột, TỔNG CỘNG, khung nét đứt, nút xanh) */
+.payment-detail-page.page {
+  font-family: "Roboto", "Segoe UI", Helvetica, Arial, sans-serif;
+  width: min(1160px, 96vw);
+  margin: 20px auto 40px;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+.payment-detail-panel {
+  margin: 0;
+  padding: 22px 24px 24px;
+  border-style: solid;
+  border-color: #000000;
+  border-width: 2px;
+  background: #ffffff;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.payment-detail-panel .status-banner {
+  margin-top: 14px;
+}
+
+.payment-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+}
+
+.payment-detail-back {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #000000;
+  font-size: 26px;
+  line-height: 1;
+  font-weight: 400;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.payment-detail-back:hover {
+  opacity: 0.75;
+}
+
+.payment-detail-title {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #000000;
+}
+
+.payment-detail-divider {
+  margin: 12px 0 0;
+  border: none;
+  border-top: 1px solid #bdbdbd;
+  width: 100%;
+}
+
+.payment-detail-banan-line {
+  margin: 18px 0 12px;
+  font-size: 17px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.payment-detail-banan-text strong {
+  font-weight: 700;
+}
+
+.payment-detail-table-shell {
+  margin-top: 8px;
+}
+
+.payment-detail-panel .payment-detail-data-table {
+  background: #ffffff;
+}
+
+.payment-detail-panel .payment-detail-data-table thead th {
+  background: #f2f2f2;
+  border: 1px solid #000000;
+  padding: 10px 8px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #000000;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.payment-detail-panel .payment-detail-data-table tbody td {
+  border: 1px solid #000000;
+  padding: 10px 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #000000;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.payment-detail-panel .payment-detail-data-table .col-stt {
+  width: 56px;
+}
+
+.payment-detail-panel .payment-detail-data-table .col-sl {
+  width: 72px;
+}
+
+.payment-detail-panel .payment-detail-data-table .col-price {
+  width: 120px;
+}
+
+.payment-detail-panel .payment-detail-data-table .payment-detail-dish {
+  font-weight: 700;
+  text-align: center;
+}
+
+.payment-detail-summary-wrap {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.payment-detail-summary-box {
+  border: 1px solid #000000;
+  padding: 14px 18px;
+  min-width: min(280px, 100%);
+  text-align: right;
+  box-sizing: border-box;
+}
+
+.payment-detail-summary-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: #000000;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.payment-detail-summary-value {
+  margin-top: 8px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #b71c1c;
+  line-height: 1.15;
+}
+
+.payment-detail-method-box {
+  margin-top: 22px;
+  padding: 16px 18px;
+  border: 1px dashed #000000;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.payment-detail-method-title {
+  margin: 0 0 14px;
+  font-size: 17px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.payment-detail-method-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px 28px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #000000;
+}
+
+.payment-detail-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.payment-detail-radio input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #1976d2;
+}
+
+.payment-detail-footer {
+  margin-top: 32px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.payment-detail-continue {
+  margin: 0;
+  padding: 14px 36px;
+  min-height: 52px;
+  min-width: 200px;
+  border: 1px solid #000000;
+  border-radius: 0;
+  background: #d5e8d4;
+  color: #000000;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+
+.payment-detail-continue:hover:not(:disabled) {
+  filter: brightness(0.98);
+}
+
+.payment-detail-continue:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.order-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.table-number-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.table-number-input {
+  width: 90px;
+  border: none;
+  border-bottom: 2px solid var(--border-default);
+  background: transparent;
+  font-size: 28px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.table-number-input:focus,
+.line-input:focus,
+.search-input:focus {
+  outline: none;
+  border-color: var(--border-strong);
+}
+
+.line-input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #9c9c9c;
+  background: transparent;
+  padding: 8px 6px;
+  font-size: 16px;
+  font-family: inherit;
+}
+
+.select-input {
+  border: 1px solid var(--border-default);
+  background: #f1f1f1;
+  padding: 12px 10px;
+}
+
+.line-input.large {
+  font-size: 30px;
+  padding: 10px 6px;
+  border-bottom-width: 2px;
+}
+
+.btn {
+  border: 2px solid var(--border-strong);
+  background: white;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 10px 22px;
+}
+
+.btn:hover {
+  filter: brightness(0.98);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-primary {
+  background: var(--btn-primary);
+}
+
+.btn-success {
+  background: var(--btn-success);
+}
+
+.btn-danger {
+  background: var(--btn-danger);
+}
+
+.btn-secondary {
+  background: var(--btn-secondary);
+}
+
+.btn-sm {
+  font-size: 16px;
+  padding: 6px 14px;
+}
+
+.btn-lg {
+  min-width: 260px;
+  min-height: 68px;
+}
+
+.btn-xl {
+  width: min(620px, 100%);
+  min-height: 86px;
+  font-size: 42px;
+  font-weight: 700;
+}
+
+.table-shell {
+  overflow-x: auto;
+  margin-top: 12px;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ececec;
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid var(--border-default);
+  padding: 12px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.data-table th {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.data-table td {
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.data-table .col-stt {
+  width: 70px;
+}
+
+.data-table .col-action,
+.data-table .col-quantity,
+.data-table .col-price,
+.data-table .col-image {
+  width: 170px;
+}
+
+.data-table .empty-row {
+  text-align: center;
+  padding: 16px;
+  color: var(--text-muted);
+}
+
+.menu-table .dish-name {
+  font-weight: 700;
+}
+
+.price-text {
+  color: #cf1021;
+  font-weight: 700;
+}
+
+.search-title-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.back-link {
+  border: none;
+  background: transparent;
+  font-size: 38px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.search-toolbar {
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+}
+
+.search-input {
+  width: 100%;
+  border: 1px solid var(--border-default);
+  background: #f1f1f1;
+  padding: 14px 10px;
+  font-size: 20px;
+}
+
+.order-footer-row {
+  margin-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.order-meta p {
+  margin: 0 0 8px;
+  font-size: 20px;
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.table-display {
+  margin: 0 0 14px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.order-list-title {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.field-label {
+  margin-top: 8px;
+  display: block;
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.payment-entry-panel {
+  max-width: 1200px;
+}
+
+/* Chờ thanh toán — wireframe (nền trắng, viền đen, nút #D9EAD3) */
+.payment-wait-page.page {
+  font-family: "Roboto", "Segoe UI", Helvetica, Arial, sans-serif;
+  width: min(1160px, 96vw);
+  margin: 20px auto 40px;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+.payment-wait-panel {
+  margin: 0;
+  padding: 22px 24px 26px;
+  border-style: solid;
+  border-color: #000000;
+  border-width: 2px;
+  background: #ffffff;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: min(42vh, 380px);
+  display: flex;
+  flex-direction: column;
+}
+
+.payment-wait-panel .status-banner {
+  margin-top: 16px;
+  align-self: stretch;
+}
+
+.payment-wait-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+}
+
+.payment-wait-back {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #000000;
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 400;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.payment-wait-back:hover {
+  opacity: 0.75;
+}
+
+.payment-wait-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #000000;
+}
+
+.payment-wait-divider {
+  margin: 10px 0 0;
+  border: none;
+  border-top: 1px solid #cccccc;
+  width: 100%;
+}
+
+.payment-wait-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 26px 16px 22px;
+  text-align: center;
+  min-height: 0;
+}
+
+.payment-wait-status {
+  margin: 0;
+  max-width: 36em;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.45;
+  color: #333333;
+}
+
+.payment-wait-footer {
+  display: flex;
+  justify-content: center;
+  padding: 14px 8px 0;
+  margin-top: 0;
+  flex-shrink: 0;
+}
+
+.payment-wait-confirm {
+  width: min(70%, 520px);
+  margin: 0;
+  padding: 12px 26px;
+  min-height: 48px;
+  border: 1px solid #000000;
+  border-radius: 0;
+  background: #d9ead3;
+  color: #000000;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+}
+
+.payment-wait-confirm:hover:not(:disabled) {
+  filter: brightness(0.98);
+}
+
+.payment-wait-confirm:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.payment-headline-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 2px solid var(--border-default);
+  padding-bottom: 12px;
+}
+
+.cashier-label {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 500;
+}
+
+.customer-box {
+  margin-top: 18px;
+  border: 1px solid var(--border-default);
+  padding: 16px;
+}
+
+.customer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 14px;
+}
+
+.field-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.field-inline span {
+  min-width: 52px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.field-inline.full {
+  grid-column: 1 / -1;
+}
+
+.payment-summary-row {
+  margin-top: 18px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.summary-box {
+  width: min(420px, 100%);
+  border: 1px solid var(--border-default);
+  padding: 14px;
+}
+
+.summary-box p {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 30px;
+  padding: 6px 0;
+}
+
+.summary-box .total {
+  border-top: 1px solid var(--border-default);
+  margin-top: 8px;
+  padding-top: 8px;
+  color: #cf1021;
+  font-weight: 700;
+}
+
+.payment-method-box {
+  margin-top: 22px;
+  border: 1px dashed #8f8f8f;
+  padding: 16px;
+}
+
+.method-options {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: 24px;
+}
+
+.method-options input {
+  transform: scale(1.2);
+}
+
+.amount-inline {
+  margin-top: 14px;
+  max-width: 520px;
+}
+
+.actions-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.actions-row.right {
+  justify-content: flex-end;
+}
+
+.actions-row.center {
+  justify-content: center;
+}
+
+.actions-row.between {
+  justify-content: space-between;
+}
+
+/* In hóa đơn — wireframe + phiếu in (monospace, gạch đứt, nút #D9EAD3) */
+.invoice-print-page.page {
+  font-family: "Roboto", "Segoe UI", Helvetica, Arial, sans-serif;
+  width: min(1160px, 96vw);
+  margin: 20px auto 40px;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+.invoice-print-panel {
+  margin: 0 auto;
+  padding: 22px 24px 24px;
+  border-style: solid;
+  border-color: #000000;
+  border-width: 2px;
+  background: #ffffff;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: min(520px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+}
+
+.invoice-print-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+}
+
+.invoice-print-back {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #000000;
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 400;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.invoice-print-back:hover {
+  opacity: 0.75;
+}
+
+.invoice-print-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #000000;
+}
+
+.invoice-print-divider {
+  margin: 12px 0 18px;
+  border: none;
+  border-top: 1px solid #cccccc;
+  width: 100%;
+}
+
+.invoice-paper {
+  width: 100%;
+  margin: 0;
+  padding: 20px 18px;
+  border: 1px solid #000000;
+  background: #ffffff;
+  font-family: "IBM Plex Mono", "Courier New", Courier, monospace;
+  color: #000000;
+  box-sizing: border-box;
+}
+
+.invoice-receipt-title {
+  margin: 0 0 10px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.invoice-receipt-store {
+  margin: 0 0 4px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+.invoice-dash {
+  border: none;
+  border-top: 1px dashed #000000;
+  margin: 12px 0;
+}
+
+.invoice-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin: 6px 0;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.invoice-line-item span:last-child {
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.invoice-line-total {
+  margin-top: 8px;
+  font-weight: 700;
+}
+
+.invoice-line-total strong {
+  font-weight: 700;
+}
+
+.invoice-thanks {
+  margin: 14px 0 0;
+  text-align: center;
+  font-size: 12px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.invoice-print-btn {
+  margin-top: 18px;
+  width: 100%;
+  padding: 14px 20px;
+  min-height: 52px;
+  border: 1px solid #000000;
+  border-radius: 0;
+  background: #d9ead3;
+  color: #000000;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+}
+
+.invoice-print-btn:hover {
+  filter: brightness(0.98);
+}
+
+/* Giữ .dashed cho các màn khác (nếu còn dùng) */
+.dashed {
+  border: none;
+  border-top: 2px dashed #6e6e6e;
+  margin: 18px 0;
+}
+
+.total-row {
+  font-weight: 700;
+  color: #111;
+}
+
+@media (max-width: 960px) {
+  .top-nav {
+    flex-wrap: wrap;
+  }
+
+  .page {
+    width: 100%;
+    margin: 10px auto 24px;
+    padding: 0 8px;
+  }
+
+  .panel {
+    padding: 14px;
+  }
+
+  .home-actions,
+  .customer-grid,
+  .order-header-row,
+  .payment-headline-row,
+  .order-footer-row,
+  .actions-row.between,
+  .method-options {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .line-input.large {
+    font-size: 22px;
+  }
+
+  .field-label,
+  .title,
+  .title-inline {
+    font-size: 36px;
+  }
+
+  .data-table th,
+  .data-table td,
+  .summary-box p {
+    font-size: 22px;
+  }
+
+  .btn,
+  .btn-lg,
+  .btn-xl {
+    width: 100%;
+    min-height: 54px;
+    font-size: 20px;
+  }
+
+  .invoice-receipt-title {
+    font-size: 14px;
+  }
+
+  .invoice-receipt-store {
+    font-size: 12px;
+  }
+
+  .invoice-line {
+    font-size: 12px;
+  }
+
+  .invoice-thanks {
+    font-size: 11px;
+  }
+
+  .invoice-print-panel {
+    max-width: 100%;
+    padding: 16px 12px 18px;
+  }
+
+  .menu-order-search {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .menu-order-btn-search {
+    width: 100%;
+  }
+
+  .menu-order-panel .menu-order-data-table thead th,
+  .menu-order-panel .menu-order-data-table tbody td {
+    font-size: 14px;
+    padding: 8px 6px;
+  }
+
+  .menu-order-panel {
+    padding: 16px 12px 18px;
+  }
+
+  .payment-tables-footer {
+    justify-content: stretch;
+  }
+
+  .payment-tables-continue {
+    width: 100%;
+  }
+
+  .payment-tables-panel {
+    padding: 16px 12px 18px;
+  }
+
+  .customer-info-footer {
+    justify-content: stretch;
+  }
+
+  .customer-info-continue {
+    width: 100%;
+  }
+
+  .customer-info-panel {
+    padding: 16px 12px 18px;
+  }
+
+  .payment-detail-footer {
+    justify-content: stretch;
+  }
+
+  .payment-detail-continue {
+    width: 100%;
+  }
+
+  .payment-detail-summary-wrap {
+    justify-content: stretch;
+  }
+
+  .payment-detail-summary-box {
+    width: 100%;
+  }
+
+  .payment-detail-method-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .payment-detail-panel {
+    padding: 16px 12px 18px;
+  }
+
+  .payment-detail-panel .payment-detail-data-table thead th,
+  .payment-detail-panel .payment-detail-data-table tbody td {
+    font-size: 13px;
+    padding: 8px 6px;
+  }
+
+  .payment-detail-summary-value {
+    font-size: 24px;
+  }
+
+  .payment-wait-panel {
+    padding: 18px 12px 20px;
+    min-height: min(48vh, 320px);
+  }
+
+  .payment-wait-title {
+    font-size: 22px;
+  }
+
+  .payment-wait-confirm {
+    width: 100%;
+    max-width: none;
+    font-size: 14px;
+    padding: 12px 20px;
+  }
+
+  .payment-wait-status {
+    font-size: 18px;
+  }
+
+  .payment-wait-main {
+    padding: 20px 10px 16px;
+  }
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
+
+  .top-nav,
+  .no-print,
+  .actions-row,
+  .status-banner {
+    display: none !important;
+  }
+
+  .page {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .invoice-print-page {
+    margin: 0;
+    padding: 0;
+    max-width: none;
+    width: 100%;
+  }
+
+  .invoice-print-panel {
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    max-width: 100% !important;
+  }
+
+  .invoice-paper {
+    width: 100%;
+    border: none;
+    padding: 12mm 10mm;
+    font-size: 11pt;
+  }
+
+  .invoice-line {
+    font-size: 11pt;
+  }
+
+  .invoice-receipt-title {
+    font-size: 12pt;
+  }
+
+  .invoice-receipt-store {
+    font-size: 10pt;
+  }
+
+  .invoice-thanks {
+    font-size: 10pt;
+  }
+}

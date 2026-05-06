@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.ptit.restaurant_management_mono.domain.enums.BanDatTrangThai;
 
 import jakarta.persistence.CascadeType;
@@ -29,6 +30,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class BanDat {
 
     @Id
@@ -51,7 +53,6 @@ public class BanDat {
     @Column(nullable = false, length = 30)
     private BanDatTrangThai trangThai = BanDatTrangThai.CHO_GOI_MON;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "banDat", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MonAnDat> monAnDats = new ArrayList<>();
 }

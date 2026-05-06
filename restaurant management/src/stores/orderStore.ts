@@ -117,7 +117,10 @@ export const useOrderStore = defineStore("order", () => {
     }
   }
 
-  async function addItemToCurrentSession(monAnId: number, soLuong: number): Promise<OrderSessionView> {
+  async function addItemToCurrentSession(
+    monAnId: number,
+    soLuong: number,
+  ): Promise<OrderSessionView> {
     clearMessages();
 
     if (!session.value) {
@@ -168,7 +171,7 @@ export const useOrderStore = defineStore("order", () => {
       const rawSession = await confirmOrder(session.value.sessionId);
       const confirmedSession = normalizeReservationSession(rawSession);
       session.value = confirmedSession;
-      successMessage.value = "Đặt món thành công. Đơn đã được gửi xuống bếp.";
+      successMessage.value = "Đã xác nhận danh sách gọi món.";
       return confirmedSession;
     } catch (error) {
       errorMessage.value = error instanceof Error ? error.message : "Không thể xác nhận đặt món.";

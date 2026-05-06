@@ -1,20 +1,19 @@
 package com.ptit.restaurant_management_mono.controller;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ptit.restaurant_management_mono.domain.entity.BanDat;
 import com.ptit.restaurant_management_mono.domain.entity.HoaDon;
 import com.ptit.restaurant_management_mono.domain.entity.KhachHang;
+import com.ptit.restaurant_management_mono.domain.entity.MonAnDat;
+import com.ptit.restaurant_management_mono.domain.enums.PaymentMethod;
 import com.ptit.restaurant_management_mono.exception.BusinessException;
 import com.ptit.restaurant_management_mono.service.payment.PaymentService;
 
@@ -28,27 +27,27 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     /**
-     * Body là {@link KhachHang}: dùng hoVaTen + soDienThoai để tìm hoặc tạo (id có
-     * thể null).
+     * Khớp thiết kế: {@code getOrCreateCustomer(soDienThoai, hoVaTen)} — tham số
+     * query/form, không bọc DTO.
      */
     @PostMapping("/customers/get-or-create")
-    public KhachHang getOrCreateCustomer(@RequestBody KhachHang khachHang) {
-        if (khachHang == null) {
-            throw new BusinessException("KhachHang không được để trống.");
-        }
-        String hoVaTen = khachHang.getHoVaTen();
-        String soDienThoai = khachHang.getSoDienThoai();
+    public KhachHang getOrCreateCustomer(
+            @RequestParam String soDienThoai,
+            @RequestParam String hoVaTen) {
         if (hoVaTen == null || hoVaTen.trim().isEmpty()) {
             throw new BusinessException("hoVaTen không được để trống.");
         }
         if (soDienThoai == null || soDienThoai.trim().isEmpty()) {
             throw new BusinessException("soDienThoai không được để trống.");
         }
-        return paymentService.getOrCreateCustomer(hoVaTen.trim(), soDienThoai.trim());
+        return paymentService.getOrCreateCustomer(soDienThoai.trim(), hoVaTen.trim());
     }
 
+    /**
+     * Trả về {@link MonAnDat}[] — khớp biểu đồ lớp module thanh toán (preview).
+     */
     @GetMapping("/preview")
-    public List<BanDat> previewPayment(
+    public List<MonAnDat> previewPayment(
             @RequestParam(required = false) List<Integer> soBanThanhToan,
             @RequestParam(required = false) List<Integer> tableNumbers) {
         List<Integer> resolvedTables = soBanThanhToan != null ? soBanThanhToan : tableNumbers;
@@ -59,54 +58,27 @@ public class PaymentController {
     }
 
     /**
-     * Body là {@link HoaDon} (phiếu xác nhận): khachHang.id, phuongThucThanhToan,
-     * dsBanDat[].ban.soThuTu (danh sách bàn thanh toán), nhanVienThuNgan.id (tuỳ
-     * chọn),
-     * tongTien (tuỳ chọn — khi tiền mặt: số tiền khách trả; null thì lấy theo tổng
-     * món).
+     * Khớp thiết kế:
+     * {@code confirmPayment(soBanThanhToan, khachHangId, thuNganId, paymentMethod, soTienKhachTra)}.
+     * Tham số gửi qua query (POST) — không body {@code HoaDon}.
      */
     @PostMapping("/confirm")
-    public HoaDon confirmPayment(@RequestBody HoaDon phieuThanhToan) {
-        if (phieuThanhToan == null) {
-            throw new BusinessException("HoaDon không được để trống.");
-        }
-        if (phieuThanhToan.getKhachHang() == null || phieuThanhToan.getKhachHang().getId() == null) {
-            throw new BusinessException("khachHang.id không được để trống.");
-        }
-        if (phieuThanhToan.getPhuongThucThanhToan() == null) {
-            throw new BusinessException("phuongThucThanhToan không được để trống.");
-        }
-        List<Integer> soBanThanhToan = extractSoBan(phieuThanhToan);
-        Long khachHangId = phieuThanhToan.getKhachHang().getId();
-        Long thuNganId = phieuThanhToan.getNhanVienThuNgan() != null
-                ? phieuThanhToan.getNhanVienThuNgan().getId()
-                : null;
-        BigDecimal soTienKhachTra = phieuThanhToan.getTongTien();
-
+    public HoaDon confirmPayment(
+            @RequestParam List<Integer> soBanThanhToan,
+            @RequestParam Long khachHangId,
+            @RequestParam(required = false) Long thuNganId,
+            @RequestParam PaymentMethod paymentMethod,
+            @RequestParam(required = false) BigDecimal soTienKhachTra) {
         return paymentService.confirmPayment(
                 soBanThanhToan,
                 khachHangId,
                 thuNganId,
-                phieuThanhToan.getPhuongThucThanhToan(),
+                paymentMethod,
                 soTienKhachTra);
     }
 
     @GetMapping("/invoices/{invoiceId}")
     public HoaDon getInvoice(@PathVariable Long invoiceId) {
         return paymentService.getInvoice(invoiceId);
-    }
-
-    private static List<Integer> extractSoBan(HoaDon input) {
-        if (input.getDsBanDat() == null || input.getDsBanDat().isEmpty()) {
-            throw new BusinessException("dsBanDat không được để trống.");
-        }
-        List<Integer> numbers = new ArrayList<>();
-        for (BanDat bd : input.getDsBanDat()) {
-            if (bd.getBan() == null || bd.getBan().getSoThuTu() == null) {
-                throw new BusinessException("Mỗi phần tử dsBanDat phải có ban.soThuTu.");
-            }
-            numbers.add(bd.getBan().getSoThuTu());
-        }
-        return numbers;
     }
 }

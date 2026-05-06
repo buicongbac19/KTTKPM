@@ -1,3 +1,16 @@
+<script setup lang="ts">
+import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/authStore";
+
+const authStore = useAuthStore();
+const router = useRouter();
+
+function onLogout() {
+  authStore.logout();
+  void router.replace("/dang-nhap");
+}
+</script>
+
 <template>
   <main class="page">
     <section class="panel home-panel">
@@ -15,6 +28,10 @@
           Thanh toán
         </RouterLink>
       </div>
+
+      <p class="home-logout-wrap">
+        <button type="button" class="home-logout" @click="onLogout">Đăng xuất</button>
+      </p>
     </section>
   </main>
 </template>

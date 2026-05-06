@@ -36,6 +36,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PaymentService {
 
+    /** Phiên có thể thanh toán: vẫn {@link BanDatTrangThai#CHO_GOI_MON} cho đến khi xác nhận thanh toán. */
     private static final List<BanDatTrangThai> PAYABLE_STATUSES = List.of(BanDatTrangThai.CHO_GOI_MON);
 
     private final BanDatRepository banDatRepository;
@@ -44,15 +45,18 @@ public class PaymentService {
     private final NhanVienRepository nhanVienRepository;
     private final PaymentStrategyFactory paymentStrategyFactory;
 
+    /**
+     * Khớp chữ ký thiết kế: {@code getOrCreateCustomer(soDienThoai, hoVaTen)}.
+     */
     @Transactional
-    public KhachHang getOrCreateCustomer(String tenKhachHang, String soDienThoaiKhachHang) {
-        return resolveCustomer(tenKhachHang, soDienThoaiKhachHang);
+    public KhachHang getOrCreateCustomer(String soDienThoai, String hoVaTen) {
+        return resolveCustomer(hoVaTen, soDienThoai);
     }
 
     @Transactional
-    public List<BanDat> previewPayment(List<Integer> soBanThanhToan) {
+    public List<MonAnDat> previewPayment(List<Integer> soBanThanhToan) {
         PaymentAggregate aggregate = aggregateByTableNumbers(soBanThanhToan, PAYABLE_STATUSES);
-        return aggregate.sessions();
+        return aggregate.items();
     }
 
     @Transactional

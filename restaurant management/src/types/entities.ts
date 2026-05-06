@@ -24,13 +24,14 @@ export interface MonAn {
 }
 
 /**
- * Món ăn đặt. Model có quan hệ tới BanDat; trong JSON lồng trong phiên bàn, `banDat` không được trả về (@JsonBackReference).
+ * Món ăn đặt. JSON có thể trả {@code banDat} đầy đủ hoặc chỉ id (tham chiếu lặp).
  */
 export interface MonAnDat {
   id: number;
   soLuong: number;
   donGia: number;
   monAn: MonAn;
+  banDat?: BanDat | number | null;
 }
 
 /**

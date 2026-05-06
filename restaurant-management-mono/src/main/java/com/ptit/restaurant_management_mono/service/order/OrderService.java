@@ -9,6 +9,7 @@ import com.ptit.restaurant_management_mono.domain.entity.BanDat;
 import com.ptit.restaurant_management_mono.domain.entity.MonAn;
 import com.ptit.restaurant_management_mono.domain.entity.MonAnDat;
 import com.ptit.restaurant_management_mono.domain.enums.BanDatTrangThai;
+import com.ptit.restaurant_management_mono.exception.BusinessException;
 import com.ptit.restaurant_management_mono.exception.ResourceNotFoundException;
 import com.ptit.restaurant_management_mono.repository.BanDatRepository;
 import com.ptit.restaurant_management_mono.repository.BanRepository;
@@ -55,7 +56,7 @@ public class OrderService {
     public BanDat addItem(Long reservationTableId, Long monAnId, Integer soLuong) {
         BanDat banDat = getReservationTableById(reservationTableId);
         if (banDat.getTrangThai() != BanDatTrangThai.CHO_GOI_MON) {
-            throw new IllegalStateException("Trạng thái hiện tại không cho phép thêm món.");
+            throw new BusinessException("Trạng thái hiện tại không cho phép thêm món.");
         }
 
         MonAn monAn = monAnRepository.findById(monAnId)
@@ -71,14 +72,18 @@ public class OrderService {
         return banDatRepository.save(banDat);
     }
 
+    /**
+     * Xác nhận một lần gọi món với khách (kết thúc thao tác trên giao diện gọi món cho lượt đó).
+     * Không đổi {@link BanDat#getTrangThai()}; {@link BanDatTrangThai#DA_HOAN_THANH} chỉ gán khi thanh toán xong.
+     */
     @Transactional
     public BanDat confirmOrder(Long reservationTableId) {
         BanDat banDat = getReservationTableById(reservationTableId);
         if (banDat.getTrangThai() != BanDatTrangThai.CHO_GOI_MON) {
-            throw new IllegalStateException("Trạng thái hiện tại không cho phép xác nhận gọi món.");
+            throw new BusinessException("Trạng thái hiện tại không cho phép xác nhận gọi món.");
         }
         if (banDat.getMonAnDats().isEmpty()) {
-            throw new IllegalStateException("Không thể xác nhận bàn đặt khi danh sách món rỗng.");
+            throw new BusinessException("Không thể xác nhận bàn đặt khi danh sách món rỗng.");
         }
         return banDatRepository.save(banDat);
     }

@@ -6,7 +6,7 @@ import {
   getOrCreateCustomer,
   previewPayment,
 } from "@/services/PaymentApi";
-import type { BanDat, HoaDon, KhachHang, MonAnDat, PaymentMethod } from "@/types/entities";
+import type { BanDat, HoaDon, MonAnDat, PaymentMethod } from "@/types/entities";
 import type {
   InvoiceView,
   PaymentConfirmedView,
@@ -56,23 +56,41 @@ export const usePaymentStore = defineStore("payment", () => {
     tablesInput.value = raw;
   }
 
-  function normalizePreview(rawSessions: BanDat[], tableNumbers: number[]): PaymentPreviewView {
-    const sessions = rawSessions ?? [];
+  /** Jackson có thể thay {@code banDat} bằng id khi lặp lại cùng phiên bàn. */
+  function resolveSoBanFromLine(item: MonAnDat, all: MonAnDat[]): number {
+    const bd = item.banDat;
+    if (bd != null && typeof bd === "object" && "ban" in bd && bd.ban != null) {
+      return Number((bd as BanDat).ban?.soThuTu ?? 0);
+    }
+    if (typeof bd === "number") {
+      const full = all.find(
+        (x) =>
+          x.banDat != null &&
+          typeof x.banDat === "object" &&
+          Number((x.banDat as BanDat).id) === bd,
+      );
+      if (full?.banDat != null && typeof full.banDat === "object") {
+        return Number((full.banDat as BanDat).ban?.soThuTu ?? 0);
+      }
+    }
+    return 0;
+  }
 
-    const items: PaymentLineItemView[] = sessions.flatMap((session) => {
-      const monAnDats: MonAnDat[] = Array.isArray(session.monAnDats) ? session.monAnDats : [];
-      return monAnDats.map((item) => {
-        const donGia = Number(item.donGia ?? 0);
-        const soLuong = Number(item.soLuong ?? 0);
-        return {
-          soBan: Number(session.ban?.soThuTu ?? 0),
-          monAnId: Number(item.monAn?.id ?? 0),
-          tenMon: String(item.monAn?.ten ?? ""),
-          soLuong,
-          donGia,
-          thanhTien: donGia * soLuong,
-        };
-      });
+  /** Server trả {@link MonAnDat}[] (preview thanh toán). */
+  function normalizePreview(rawLines: MonAnDat[], tableNumbers: number[]): PaymentPreviewView {
+    const lines = rawLines ?? [];
+
+    const items: PaymentLineItemView[] = lines.map((item) => {
+      const donGia = Number(item.donGia ?? 0);
+      const soLuong = Number(item.soLuong ?? 0);
+      return {
+        soBan: resolveSoBanFromLine(item, lines),
+        monAnId: Number(item.monAn?.id ?? 0),
+        tenMon: String(item.monAn?.ten ?? ""),
+        soLuong,
+        donGia,
+        thanhTien: donGia * soLuong,
+      };
     });
 
     const tongTien = items.reduce((sum, item) => sum + item.thanhTien, 0);
@@ -169,10 +187,7 @@ export const usePaymentStore = defineStore("payment", () => {
     loadingCustomer.value = true;
 
     try {
-      const result = await getOrCreateCustomer({
-        hoVaTen: name,
-        soDienThoai: phone,
-      });
+      const result = await getOrCreateCustomer(phone, name);
       customerId.value = result.id;
       customerName.value = result.hoVaTen;
       customerPhone.value = result.soDienThoai;
@@ -198,8 +213,8 @@ export const usePaymentStore = defineStore("payment", () => {
     loadingPreview.value = true;
 
     try {
-      const rawSessions = await previewPayment(tableNumbers);
-      const result = normalizePreview(rawSessions, tableNumbers);
+      const rawLines = await previewPayment(tableNumbers);
+      const result = normalizePreview(rawLines, tableNumbers);
       preview.value = result;
       confirmed.value = null;
       invoice.value = null;
@@ -230,14 +245,7 @@ export const usePaymentStore = defineStore("payment", () => {
     submitting.value = true;
 
     try {
-      const phieuThanhToan: Partial<HoaDon> = {
-        phuongThucThanhToan: paymentMethod.value,
-        khachHang: customerId.value ? ({ id: customerId.value } as KhachHang) : undefined,
-        dsBanDat: preview.value.soBanThanhToan.map((soThuTu) => ({
-          ban: { soThuTu },
-        })) as HoaDon["dsBanDat"],
-      };
-
+      let soTienKhachTra: number | undefined;
       if (paymentMethod.value === "TIEN_MAT") {
         const numericAmount =
           amountReceived.value.trim().length > 0
@@ -245,10 +253,15 @@ export const usePaymentStore = defineStore("payment", () => {
             : preview.value.tongTien;
         const tien =
           Number.isFinite(numericAmount) ? numericAmount : preview.value.tongTien;
-        phieuThanhToan.tongTien = tien;
+        soTienKhachTra = tien;
       }
 
-      const rawHoaDon = await confirmPayment(phieuThanhToan);
+      const rawHoaDon = await confirmPayment({
+        soBanThanhToan: preview.value.soBanThanhToan,
+        khachHangId: customerId.value,
+        paymentMethod: paymentMethod.value,
+        soTienKhachTra,
+      });
       const result = normalizeHoaDonResponse(rawHoaDon);
       confirmed.value = result;
       successMessage.value = "Xác nhận thanh toán thành công.";

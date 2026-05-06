@@ -3,6 +3,7 @@ package com.ptit.restaurant_management_mono.domain.entity;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,6 +31,8 @@ public abstract class NguoiDung {
     @Column(length = 100, unique = true)
     private String username;
 
+    /** Chỉ nhận từ JSON (đăng nhập); không trả về client. */
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(length = 255)
     private String password;
 

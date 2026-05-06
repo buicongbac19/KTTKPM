@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import TrangChuView from "@/views/TrangChuView.vue";
+import DangNhapView from "@/views/DangNhapView.vue";
 import ChonBanView from "@/views/order/ChonBanView.vue";
 import DanhSachMonGoiView from "@/views/order/DanhSachMonGoiView.vue";
 import NhapSoBanThanhToanView from "@/views/payment/NhapSoBanThanhToanView.vue";
@@ -7,10 +8,17 @@ import NhapThongTinKhachHangView from "@/views/payment/NhapThongTinKhachHangView
 import ChiTietThanhToanView from "@/views/payment/ChiTietThanhToanView.vue";
 import ChoThanhToanView from "@/views/payment/ChoThanhToanView.vue";
 import InHoaDonView from "@/views/payment/InHoaDonView.vue";
+import { useAuthStore } from "@/stores/authStore";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: "/dang-nhap",
+      name: "dang-nhap",
+      component: DangNhapView,
+      meta: { public: true },
+    },
     {
       path: "/",
       name: "trang-chu",
@@ -60,6 +68,27 @@ const router = createRouter({
       redirect: "/thanh-toan/nhap-so-ban-thanh-toan",
     },
   ],
+});
+
+router.beforeEach((to) => {
+  const auth = useAuthStore();
+  auth.restoreSession();
+
+  if (to.meta.public) {
+    if (to.name === "dang-nhap" && auth.isAuthenticated) {
+      return { path: "/" };
+    }
+    return true;
+  }
+
+  if (!auth.isAuthenticated) {
+    return {
+      name: "dang-nhap",
+      query: { redirect: to.fullPath },
+    };
+  }
+
+  return true;
 });
 
 export default router;

@@ -190,3 +190,10 @@ UPDATE nguoi_dung
 SET ho_va_ten = 'Nguyễn Văn A'
 WHERE
     username = 'cashier_default';
+
+/* Mật khẩu mặc định: cashier123 (BCrypt) — đổi sau khi triển khai thật */
+UPDATE nguoi_dung
+SET
+    password = '$2a$10$mjd3HXU.dCiwBBznXSB.Yuazdi/s9n8yaocYHcImyh466y/0RUSWO'
+WHERE
+    username = 'cashier_default';

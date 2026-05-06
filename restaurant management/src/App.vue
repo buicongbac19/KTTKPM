@@ -11,5 +11,7 @@ import { computed } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
-const showTopNav = computed(() => route.name !== "trang-chu");
+const showTopNav = computed(
+  () => route.name !== "trang-chu" && route.name !== "dang-nhap",
+);
 </script>

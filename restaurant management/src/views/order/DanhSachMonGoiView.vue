@@ -81,7 +81,7 @@ async function onAddItem(menuItem: MonAn) {
 async function onConfirmOrder() {
   try {
     await orderStore.confirmCurrentOrder();
-    window.alert("Xác nhận gọi món thành công. Hệ thống đã gửi thông tin xuống bộ phận bếp.");
+    window.alert("Đặt món thành công.");
     orderStore.resetOrderState();
     await router.push("/");
   } catch {

@@ -49,11 +49,14 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
   const method = options.method ?? 'GET'
   const queryString = buildQuery(options.query)
 
+  const headers: Record<string, string> = {}
+  if (options.body !== undefined) {
+    headers['Content-Type'] = 'application/json'
+  }
+
   const response = await fetch(`${API_BASE}${path}${queryString}`, {
     method,
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
   })
 
